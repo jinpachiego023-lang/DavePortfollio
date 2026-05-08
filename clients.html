@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PILOT CLIENTS</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            line-height: 1.6; 
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Back Button */
+        .project-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: #6366f1;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        .project-back:hover {
+            color: #8b5cf6;
+            transform: translateX(-5px);
+        }
+
+        /* Hero Section with Animated Background */
+        .project-hero {
+            min-height: 100vh;
+            /* Animated Landscape Background - Portrait Optimized */
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)),
+                        url('https://st5.depositphotos.com/68991526/69133/v/600/depositphotos_691334152-stock-video-animated-virtual-backgrounds-landscape-background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 2rem 80px;
+            color: white;
+            position: relative;
+        }
+
+        /* Animated Overlay for Portrait Layout */
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.45) 0%,
+                rgba(102, 126, 234, 0.35) 50%,
+                rgba(118, 75, 162, 0.45) 100%);
+            z-index: 1;
+            animation: overlayPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes overlayPulse {
+            0%, 100% { opacity: 0.92; }
+            50% { opacity: 0.75; }
+        }
+
+        .project-content {
+            max-width: 400px;
+            text-align: center;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-title {
+            font-size: clamp(2.5rem, 8vw, 3.5rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #ac5555);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        }
+
+        /* PORTRAIT CAROUSEL - Glassmorphism Enhanced */
+        .carousel-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 380px;
+            height: 520px;
+            margin: 0 auto 2.5rem;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(44, 43, 43, 0.4);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        /* Portrait Navigation Arrows - Vertical positioning */
+        .carousel-nav {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(99, 102, 241, 0.95);
+            color: white;
+            border: none;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .carousel-nav:hover {
+            background: #6366f1;
+            transform: translateX(-50%) scale(1.2);
+        }
+
+        .carousel-prev { 
+            top: 20px; 
+        }
+        .carousel-next { 
+            bottom: 20px; 
+        }
+
+        /* Portrait Dots - Horizontal at bottom */
+        .carousel-indicators {
+            position: absolute;
+            bottom: 22px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+        }
+
+        .indicator {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.8);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .indicator.active {
+            background: #6366f1;
+            transform: scale(1.4);
+            box-shadow: 0 5px 15px rgba(99,102,241,0.6);
+        }
+
+        /* Buttons - Portrait Enhanced */
+        .project-links {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 35px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            flex: 1;
+            min-width: 160px;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: rgba(255,255,255,0.95);
+            color: #6366f1;
+            backdrop-filter: blur(15px);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(99,102,241,0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.25);
+            color: white;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.35);
+            border-color: rgba(255,255,255,0.6);
+            transform: translateY(-4px);
+        }
+
+        /* Portrait-First Responsive */
+        @media (min-width: 768px) {
+            .project-content {
+                max-width: 450px;
+            }
+            
+            .carousel-wrapper {
+                max-width: 420px;
+                height: 580px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .project-hero {
+                padding: 120px 1rem 60px;
+                background-attachment: scroll;
+            }
+            
+            .project-content {
+                max-width: 340px;
+            }
+            
+            .carousel-wrapper {
+                height: 460px;
+                max-width: 340px;
+            }
+            
+            .project-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Navigation -->
+    <a href="../index.html#projects" class="project-back">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <!-- Portrait Carousel -->
+    <section class="project-hero">
+        <div class="project-content">
+            <h1 class="project-title"><i class="fas fa-users"></i>PILOT DONE</h1>
+            
+            <!-- PORTRAIT CAROUSEL -->
+            <div class="carousel-wrapper">
+                <div class="carousel-container">
+                    <!-- Portrait Images (taller aspect ratio) -->
+                    <div class="carousel-slide active">
+                        <img src="../projects/1.jfif" 
+                             alt="Global Badges 1"
+                             onerror="this.src='https://images.unsplash.com/photo-1579684566422-b6e4a35b5e67?w=400&h=600&fit=crop'">
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <img src="../projects/2.jfif" 
+                             alt="Global Badges 2"
+                             onerror="this.src='https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=600&fit=crop'">
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <img src="../projects/3.jfif" 
+                             alt="Global Badges 3"
+                             onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=600&fit=crop'">
+                    </div>
+                    
+                    <div class="carousel-slide">
+                        <img src="../projects/4.jfif" 
+                             alt="Global Badges 4"
+                             onerror="this.src='https://images.unsplash.com/photo-1556745757-8d76bdb6984b?w=400&h=600&fit=crop'">
+                    </div>
+
+                    <div class="carousel-slide">
+                        <img src="../projects/5.jfif" 
+                             alt="Global Badges 5"
+                             onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=600&fit=crop'">
+                    </div>
+
+                    <div class="carousel-slide">
+                        <img src="../projects/6.jfif" 
+                             alt="Global Badges 6"
+                             onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=600&fit=crop'">
+                    </div>
+
+                    <div class="carousel-slide">
+                        <img src="../projects/7.jfif" 
+                             alt="Global Badges 7"
+                             onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=600&fit=crop'">
+                    </div> 
+                    
+                    <div class="carousel-slide">
+                        <img src="../projects/8.jfif" 
+                             alt="Global Badges 8"
+                             onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=600&fit=crop'">
+                    </div>
+
+                    <div class="carousel-slide">
+                        <img src="../projects/9.jfif" 
+                             alt="Global Badges 9"
+                             onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=600&fit=crop'">
+                    </div>
+
+                    <div class="carousel-slide">
+                        <img src="../projects/10.jfif" 
+                             alt="Global Badges 10"
+                             onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=600&fit=crop'">
+                    </div>
+
+                    <div class="carousel-slide">
+                        <img src="../projects/11.jfif" 
+                             alt="Global Badges 11"
+                             onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&h=600&fit=crop'">
+                    </div>
+
+                    <!-- Portrait Navigation - VERTICAL ARROWS -->
+                    <button class="carousel-nav carousel-prev" onclick="changeSlide(-1)">
+                        <i class="fas fa-chevron-up"></i>
+                    </button>
+                    <button class="carousel-nav carousel-next" onclick="changeSlide(1)">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+
+                    <!-- Dots -->
+                    <div class="carousel-indicators">
+                        <div class="indicator active" onclick="currentSlide(1)"></div>
+                        <div class="indicator" onclick="currentSlide(2)"></div>
+                        <div class="indicator" onclick="currentSlide(3)"></div>
+                        <div class="indicator" onclick="currentSlide(4)"></div>
+                        <div class="indicator" onclick="currentSlide(5)"></div>
+                        <div class="indicator" onclick="currentSlide(6)"></div>
+                        <div class="indicator" onclick="currentSlide(7)"></div>
+                        <div class="indicator" onclick="currentSlide(8)"></div>
+                        <div class="indicator" onclick="currentSlide(9)"></div>
+                        <div class="indicator" onclick="currentSlide(10)"></div>
+                        <div class="indicator" onclick="currentSlide(11)"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="project-links">
+                <a href="achievements.html" class="btn btn-primary">
+                    <i class="fas fa-star"></i> STARS ACHIEVEMENTS
+                </a>
+                <a href="badges.html" class="btn btn-secondary">
+                    <i class="fas fa-users"></i> GLOBAL BADGES
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Carousel JavaScript -->
+    <script>
+        let slideIndex = 1;
+        
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.indicator');
+            
+            if (n > slides.length) slideIndex = 1;
+            if (n < 1) slideIndex = slides.length;
+            
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === slideIndex - 1);
+            });
+            
+            indicators.forEach((ind, i) => {
+                ind.classList.toggle('active', i === slideIndex - 1);
+            });
+        }
+
+        function changeSlide(n) {
+            showSlide(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlide(slideIndex = n);
+        }
+
+        // Auto-advance every 4 seconds
+        setInterval(() => changeSlide(1), 4000);
+
+        // Keyboard support (vertical navigation)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowUp') changeSlide(-1);
+            if (e.key === 'ArrowDown') changeSlide(1);
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Touch/swipe support for mobile
+        let startY = 0;
+        const carouselWrapper = document.querySelector('.carousel-wrapper');
+        
+        carouselWrapper.addEventListener('touchstart', (e) => {
+            startY = e.touches[0].clientY;
+        });
+        
+        carouselWrapper.addEventListener('touchend', (e) => {
+            const endY = e.changedTouches[0].clientY;
+            const diffY = startY - endY;
+            
+            if (Math.abs(diffY) > 50) {
+                if (diffY > 0) {
+                    changeSlide(1); // Swipe up = next
+                } else {
+                    changeSlide(-1); // Swipe down = prev
+                }
+            }
+        });
+    </script>
+</body>
+</html>
