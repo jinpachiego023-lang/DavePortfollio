@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAR</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            line-height: 1.6; 
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Back Button */
+        .project-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-decoration: none;
+            color: #6366f1;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        .project-back:hover {
+            color: #8b5cf6;
+            transform: translateX(-5px);
+        }
+
+        /* Hero Section with Background Image */
+        .project-hero {
+            min-height: 100vh;
+            /* Animated Background Image */
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.85), rgba(118, 75, 162, 0.85)),
+                        url('https://st5.depositphotos.com/68991526/69133/v/600/depositphotos_691334152-stock-video-animated-virtual-backgrounds-landscape-background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 140px 2rem 80px;
+            color: white;
+            position: relative;
+        }
+
+        /* Animated overlay for better text readability */
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(0, 0, 0, 0.4) 0%,
+                rgba(102, 126, 234, 0.3) 50%,
+                rgba(118, 75, 162, 0.4) 100%);
+            z-index: 1;
+            animation: overlayPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes overlayPulse {
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 0.7; }
+        }
+
+        .project-content {
+            max-width: 900px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-title {
+            font-size: clamp(2.8rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, #ac5555);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* COMPACT PERFECT CAROUSEL */
+        .carousel-wrapper {
+            position: relative;
+            max-width: 650px;
+            margin: 0 auto 3rem;
+            height: 360px; /* Perfect compact size */
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(44, 43, 43, 0.35);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        /* Navigation Arrows */
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(99, 102, 241, 0.95);
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .carousel-nav:hover {
+            background: #6366f1;
+            transform: translateY(-50%) scale(1.15);
+        }
+
+        .carousel-prev { left: 12px; }
+        .carousel-next { right: 12px; }
+
+        /* Dots */
+        .carousel-indicators {
+            position: absolute;
+            bottom: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.7);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .indicator.active {
+            background: #6366f1;
+            transform: scale(1.3);
+            box-shadow: 0 4px 12px rgba(99,102,241,0.5);
+        }
+
+        /* Buttons */
+        .project-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 35px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .btn-primary {
+            background: rgba(255,255,255,0.95);
+            color: #6366f1;
+            backdrop-filter: blur(15px);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(99,102,241,0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.25);
+            color: white;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255,255,255,0.4);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.35);
+            border-color: rgba(255,255,255,0.6);
+            transform: translateY(-4px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .project-hero {
+                padding: 120px 1rem 60px;
+                background-attachment: scroll; /* Better for mobile */
+            }
+            
+            .carousel-wrapper {
+                height: 260px;
+                max-width: 95%;
+            }
+            
+            .project-links {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Back Navigation -->
+    <a href="../index.html#projects" class="project-back">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <!-- Perfect Compact Carousel -->
+    <section class="project-hero">
+        <div class="project-content">
+            <h1 class="project-title"><i class="fas fa-star"></i> STAR (SEASON 30 to 40)</h1>
+            
+            <!-- COMPACT CAROUSEL WITH WORKING IMAGES -->
+            <div class="carousel-wrapper">
+                <div class="carousel-container">
+                    <!-- Image 1 -->
+                    <div class="carousel-slide active">
+                        <img src="https://scontent.fmnl8-4.fna.fbcdn.net/v/t39.30808-6/488848815_2879767775538869_5464975626198777305_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHjOwWWbm9yE4pPC4uAZhYBb9_txFE3L8Nv3-3EUTcvw2jo70DxhbiZIA2vL22_1E1kn4AOtvS028HNh3K5Hb8z&_nc_ohc=5KQ02kON1w4Q7kNvwGnYS14&_nc_oc=AdpRVInnW8R8kjavyzOI9z-CH6hCsoFC1InICpSh9YPqKZN2YTScLdJTUhivEyB-7K8&_nc_zt=23&_nc_ht=scontent.fmnl8-4.fna&_nc_gid=DFt6OHXVM_ZlPS5tlL2HPw&_nc_ss=7b2a8&oh=00_Af42_HVT05kD41odQ8FqzeMswiNeiUMzyXFwl7FqNAZNSw&oe=69FFD3EC" 
+                             alt="Global Badges 1"
+                             onerror="this.src='https://images.unsplash.com/photo-1579684566422-b6e4a35b5e67?w=800&h=450&fit=crop'">
+                    </div>
+                    
+                    <!-- Image 2 -->
+                    <div class="carousel-slide">
+                        <img src="https://scontent.fmnl8-2.fna.fbcdn.net/v/t39.30808-6/489635462_2886013198247660_1877033579234166358_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeGBmLdi1PM4_8e5LV7sE4-nOj_FEytJ2v46P8UTK0na_rm0tZ6HKoPPLoFQ3sLDUfZRqsQB6y0uZ667UjbGusX8&_nc_ohc=cdIa_MmNbfIQ7kNvwHvi7NU&_nc_oc=Ado0FIdvEBANwfCugR4jAKRq--QCvzZ25m6DqIBg69xC4QvlMCE604gw8oVOSc0x1bs&_nc_zt=23&_nc_ht=scontent.fmnl8-2.fna&_nc_gid=nOx1Y1uRB1WT1xlvqNiFBg&_nc_ss=7b2a8&oh=00_Af45m_JyrST1W6rz_rt2hDShbLE2qKAdCVm0zxEJyTfUTQ&oe=69FFD3C5" 
+                             alt="Global Badges 2"
+                             onerror="this.src='https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=450&fit=crop'">
+                    </div>
+                    
+                    <!-- Image 3 -->
+                    <div class="carousel-slide">
+                        <img src="../projects/S36STAR.jpg" 
+                             alt="Global Badges 3"
+                             onerror="this.src='https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=450&fit=crop'">
+                    </div>
+                    
+                    <!-- Image 4 -->
+                    <div class="carousel-slide">
+                        <img src="../projects/1000stars.jpg" 
+                             alt="Global Badges 4"
+                             onerror="this.src='https://images.unsplash.com/photo-1556745757-8d76bdb6984b?w=800&h=450&fit=crop'">
+                    </div>
+
+                <!-- Navigation -->
+                <button class="carousel-nav carousel-prev" onclick="changeSlide(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-nav carousel-next" onclick="changeSlide(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <!-- Dots -->
+                <div class="carousel-indicators">
+                    <div class="indicator" onclick="currentSlide(1)"></div>
+                    <div class="indicator" onclick="currentSlide(2)"></div>
+                    <div class="indicator" onclick="currentSlide(3)"></div>
+                    <div class="indicator" onclick="currentSlide(4)"></div>
+                </div>
+            </div>
+            </div>
+                <!-- Action Buttons -->
+            <div class="project-links">
+                <a href="badges.html" class="btn btn-primary">
+                    <i class="fas fa-medal"></i> GLOBAL BADGES
+                </a>
+                <a href="clients.html" class="btn btn-secondary">
+                    <i class="fas fa-users"></i>PILOT DONE
+                </a>
+            </div>
+            </div>
+    </section>
+
+    <!-- Carousel JavaScript -->
+    <script>
+        let slideIndex = 1;
+        
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.indicator');
+            
+            if (n > slides.length) slideIndex = 1;
+            if (n < 1) slideIndex = slides.length;
+            
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === slideIndex - 1);
+            });
+            
+            indicators.forEach((ind, i) => {
+                ind.classList.toggle('active', i === slideIndex - 1);
+            });
+        }
+
+        function changeSlide(n) {
+            showSlide(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlide(slideIndex = n);
+        }
+
+        // Auto-advance every 4 seconds
+        setInterval(() => changeSlide(1), 4000);
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+    </script>
+</body>
+</html>
